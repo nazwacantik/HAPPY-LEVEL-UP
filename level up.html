@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday! 🎂</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: "Trebuchet MS", sans-serif;
+  background: linear-gradient(135deg, #ffe1ed, #fff0f6, #fce0ff);
+  color: #bd648e;
+  text-align: center;
+}
+
+.container {
+  position: relative;
+  padding: 35px 15px 60px;
+  z-index: 2;
+}
+
+h1 {
+  font-size: clamp(32px, 7vw, 55px);
+  margin-bottom: 8px;
+  animation: bounce 2s infinite;
+}
+
+.subtitle {
+  font-size: 17px;
+}
+
+@keyframes bounce {
+  50% { transform: translateY(-9px); }
+}
+
+.card {
+  background: #ffffffbd;
+  max-width: 480px;
+  margin: 25px auto;
+  padding: 25px 15px;
+  border: 3px solid white;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px #e9a9c8;
+}
+
+.cake {
+  position: relative;
+  width: 220px;
+  height: 210px;
+  margin: 20px auto 5px;
+}
+
+.layer {
+  position: absolute;
+  left: 15px;
+  width: 190px;
+  height: 65px;
+  border-radius: 15px;
+  border: 4px solid white;
+}
+
+.layer.bottom {
+  bottom: 10px;
+  background: #f49bc0;
+}
+
+.layer.middle {
+  bottom: 70px;
+  background: #ffcae0;
+  width: 170px;
+  left: 25px;
+}
+
+.layer.top {
+  bottom: 130px;
+  height: 28px;
+  background: #ff8fba;
+  width: 150px;
+  left: 35px;
+  border-radius: 20px;
+}
+
+.candle {
+  position: absolute;
+  bottom: 158px;
+  left: 103px;
+  width: 14px;
+  height: 43px;
+  background: repeating-linear-gradient(
+    45deg, white, white 5px, #ff8fba 5px, #ff8fba 10px
+  );
+  border-radius: 5px;
+}
+
+.flame {
+  position: absolute;
+  width: 19px;
+  height: 27px;
+  left: -3px;
+  top: -27px;
+  background: #ffbd42;
+  border-radius: 50% 50% 45% 45%;
+  box-shadow: 0 0 20px #ffb52f;
+  animation: flicker .5s infinite alternate;
+}
+
+@keyframes flicker {
+  to { transform: scale(.8) rotate(8deg); }
+}
+
+.off .flame {
+  display: none;
+}
+
+.decoration {
+  position: absolute;
+  font-size: 30px;
+  animation: float 3s infinite ease-in-out;
+}
+
+@keyframes float {
+  50% { transform: translateY(-18px) rotate(12deg); }
+}
+
+button {
+  border: none;
+  background: #f48bb5;
+  color: white;
+  padding: 13px 22px;
+  margin: 7px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px #d66e9b;
+  transition: .2s;
+}
+
+button:hover {
+  transform: translateY(-3px);
+}
+
+button:active {
+  transform: translateY(2px);
+}
+
+.message {
+  display: none;
+  line-height: 1.8;
+  font-size: 16px;
+  background: #fff0f6;
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 20px;
+  animation: appear 1s;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.balloon {
+  position: fixed;
+  bottom: -100px;
+  font-size: 45px;
+  animation: rise 9s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes rise {
+  to {
+    transform: translateY(-120vh) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+.confetti {
+  position: fixed;
+  top: -20px;
+  font-size: 23px;
+  pointer-events: none;
+  z-index: 10;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(700deg);
+    opacity: 0;
+  }
+}
+
+.footer {
+  font-size: 13px;
+  margin-top: 35px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="decoration" style="top:50px;left:8%">💗</div>
+  <div class="decoration" style="top:130px;right:8%">⭐</div>
+  <div class="decoration" style="top:350px;left:5%">🌸</div>
+  <div class="decoration" style="top:400px;right:5%">🧸</div>
+
+  <h1>Happy Birthday! 🎂</h1>
+  <p class="subtitle">A special day for a special person 💗</p>
+
+  <div class="card">
+
+    <h2>Make a Wish! ✨</h2>
+
+    <div class="cake" id="cake">
+
+      <div class="layer bottom"></div>
+      <div class="layer middle"></div>
+      <div class="layer top"></div>
+
+      <div class="candle" id="candle">
+        <div class="flame"></div>
+      </div>
+
+    </div>
+
+    <p id="instruction">
+      Jangan lupa buat permohonan dulu! 🥹
+    </p>
+
+    <button onclick="playBirthday()">
+      🎵 Play Happy Birthday
+    </button>
+
+    <button onclick="blowCandle()">
+      🌬️ Tiup Lilin!
+    </button>
+
+    <button onclick="showLetter()">
+      💌 Buka Surat
+    </button>
+
+    <div class="message" id="letter">
+      <h2>Dear You! 💗</h2>
+
+      Selamat ulang tahun! 🎂
+
+      <br><br>
+      Happy Birthday! 🎂💗
+
+Selamat bertambah usia, yaa. Semoga di umur yang baru ini, 
+banyak hal baik datang menghampirimu. 
+Semoga semua yang sedang kamu usahakan bisa menemukan jalannya, 
+semua doa yang kamu simpan bisa satu per satu terwujud.
+
+Terima kasih sudah menjadi seseorang yang begitu berarti. 
+Jangan terlalu keras sama diri sendiri, ya. 
+Kamu juga pantas mendapatkan banyak kebahagiaan.
+
+
+
+ 
+
+      Semoga hari-harimu selalu dipenuhi
+      kebahagiaan, tawa, dan hal-hal baik.
+
+      <br><br>
+
+      Semoga semua impianmu satu per satu
+      bisa menjadi kenyataan.
+
+      Jangan lupa bahagia, ya!
+
+      <br><br>
+Stay happy, stay healthy, and keep being you! 🌷
+
+
+      Sending lots of love! 🌷💗
+
+      <h2>🎀 Happy 20th RAFID! 🎀</h2>
+    </div>
+
+  </div>
+
+  <p>🎈 Make today extra special 🎈</p>
+
+  <div class="footer">
+    Made with 💗 and a little bit of magic
+  </div>
+
+</div>
+
+<script>
+let audioContext;
+let musicPlaying = false;
+let melodyTimers = [];
+
+const notes = {
+  C4: 261.63,
+  D4: 293.66,
+  E4: 329.63,
+  F4: 349.23,
+  G4: 392.00,
+  A4: 440.00,
+  B4: 493.88,
+  C5: 523.25,
+  D5: 587.33
+};
+
+// Melodi instrumental Happy Birthday
+const melody = [
+  ["G4",.4],["G4",.4],["A4",.8],["G4",.8],["C5",.8],["B4",1.2],
+  ["G4",.4],["G4",.4],["A4",.8],["G4",.8],["D5",.8],["C5",1.2],
+  ["G4",.4],["G4",.4],["G4",.8],["E4",.8],["C5",.8],["B4",.8],["A4",1.2],
+  ["F4",.4],["F4",.4],["E4",.8],["C5",.8],["D5",.8],["C5",1.5]
+];
+
+function playNote(name, duration, start) {
+  const osc = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  osc.type = "sine";
+  osc.frequency.value = notes[name];
+
+  gain.gain.setValueAtTime(0, start);
+  gain.gain.linearRampToValueAtTime(.16, start + .04);
+  gain.gain.setTargetAtTime(.001, start + duration * .7, .12);
+
+  osc.connect(gain);
+  gain.connect(audioContext.destination);
+
+  osc.start(start);
+  osc.stop(start + duration);
+}
+
+function playBirthday() {
+  if (musicPlaying) {
+    musicPlaying = false;
+    melodyTimers.forEach(clearTimeout);
+    melodyTimers = [];
+    return;
+  }
+
+  audioContext = audioContext ||
+    new (window.AudioContext || window.webkitAudioContext)();
+
+  audioContext.resume();
+
+  musicPlaying = true;
+
+  let start = audioContext.currentTime + .1;
+
+  melody.forEach(([note, duration]) => {
+    playNote(note, duration * .85, start);
+    start += duration * .55;
+  });
+
+  const total = melody.reduce((sum, item) => sum + item[1] * .55, 0);
+
+  melodyTimers.push(setTimeout(() => {
+    musicPlaying = false;
+  }, total * 1000 + 500));
+}
+
+function blowCandle() {
+  document.getElementById("candle").classList.add("off");
+
+  document.getElementById("instruction").innerHTML =
+    "YAY! Semoga permohonanmu terkabul! 🎉💗";
+
+  confetti();
+}
+
+function showLetter() {
+  const letter = document.getElementById("letter");
+
+  letter.style.display =
+    letter.style.display === "block" ? "none" : "block";
+
+  confetti();
+}
+
+function confetti() {
+  const emojis = ["💗","🎀","✨","🌸","🎉","⭐","💕"];
+
+  for (let i = 0; i < 45; i++) {
+    const item = document.createElement("div");
+
+    item.className = "confetti";
+    item.textContent =
+      emojis[Math.floor(Math.random() * emojis.length)];
+
+    item.style.left = Math.random() * 100 + "vw";
+    item.style.animationDuration =
+      (2 + Math.random() * 3) + "s";
+
+    document.body.appendChild(item);
+
+    setTimeout(() => item.remove(), 5000);
+  }
+}
+
+// Balon bergerak otomatis
+function createBalloon() {
+  const balloon = document.createElement("div");
+
+  balloon.className = "balloon";
+  balloon.textContent =
+    ["🎈","🎀","💗","🌸"][Math.floor(Math.random()*4)];
+
+  balloon.style.left = Math.random() * 95 + "vw";
+  balloon.style.animationDuration =
+    (7 + Math.random() * 5) + "s";
+
+  document.body.appendChild(balloon);
+
+  setTimeout(() => balloon.remove(), 12000);
+}
+
+setInterval(createBalloon, 1500);
+
+</script>
+
+</body>
+</html>
